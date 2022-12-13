@@ -1,4 +1,51 @@
-.time-control {
+@font-face{
+    -fx-font-family: 'Inter';
+    -fx-font-weight: 900;
+    src: url('/fonts/Inter/Inter-Black.ttf') format('truetype');
+}
+
+@font-face{
+    -fx-font-family: 'Inter';
+    -fx-font-weight: 600;
+    src: url('/fonts/Inter/Inter-SemiBold.ttf') format('truetype');
+}
+
+.my-time-control {
     -base-color: blue;
     -fx-background-color: white;
+}
+
+.my-time-control .time-field {
+    -fx-text-fill: red;
+    -fx-font-size: 60;
+    -fx-font-family: 'Inter Black';
+}
+
+.my-time-control .caption {
+    -fx-text-fill: white;
+    -fx-font-size: 30;
+    -fx-font-family: 'Inter Medium';
+}
+
+.my-time-control:mandatory .time-field {
+    -fx-font-size: 60;
+    -fx-font-family: 'Inter Black';
+}
+.my-time-control:invalid .time-field {
+    -fx-background-color: yellow;
+    -fx-text-size-adjust: 200%;
+}
+
+.my-time-control .read-only-time-label {
+    -fx-text-fill: rgb(54, 84, 112);
+    -fx-font-size: 60;
+    -fx-font-family: 'Inter Black';
+}
+
+my-time-control .pill-background {
+    -fx-color: blue;
+}
+
+.time-control:convertible .editable-node {
+    -fx-background-color: darkorchid;
 }

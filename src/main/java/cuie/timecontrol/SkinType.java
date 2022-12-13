@@ -5,15 +5,16 @@ import java.util.function.Function;
 import javafx.scene.control.SkinBase;
 
 public enum SkinType {
-    DEFAULT_TYPE(TimeSkin::new);
 
-    private final Function<TimeControl, SkinBase<TimeControl>> factory;
+    EXPERIMENTAL(MyTimeSkin::new);
 
-    SkinType(Function<TimeControl, SkinBase<TimeControl>> factory) {
+    private final Function<MyTimeControl, SkinBase<MyTimeControl>> factory;
+
+    SkinType(Function<MyTimeControl, SkinBase<MyTimeControl>> factory) {
         this.factory = factory;
     }
 
-    public Function<TimeControl, SkinBase<TimeControl>> getFactory() {
+    public Function<MyTimeControl, SkinBase<MyTimeControl>> getFactory() {
         return factory;
     }
 

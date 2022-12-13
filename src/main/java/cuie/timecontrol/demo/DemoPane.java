@@ -11,14 +11,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
+import cuie.timecontrol.MyTimeControl;
 import cuie.timecontrol.SkinType;
-import cuie.timecontrol.TimeControl;
 
 
 public class DemoPane extends BorderPane {
     private final PresentationModel pm;
 
-    private TimeControl businessControl;
+    private MyTimeControl timeControl;
 
     private Label  timeLabel;
     private Slider hourSlider;
@@ -39,7 +39,7 @@ public class DemoPane extends BorderPane {
     private void initializeControls() {
         setPadding(new Insets(10));
 
-        businessControl = new TimeControl(SkinType.DEFAULT_TYPE);
+        timeControl = new MyTimeControl(SkinType.EXPERIMENTAL);
 
         timeLabel    = new Label();
         hourSlider   = new Slider(0, 23, 0);
@@ -50,21 +50,20 @@ public class DemoPane extends BorderPane {
     }
 
     private void layoutControls() {
+        setCenter(timeControl);
         VBox box = new VBox(10, new Label("Time Control Properties"),
-                            timeLabel, hourSlider, minuteSlider,
-                            new Label("readOnly"), readOnlyBox,
-                            new Label("mandatory"), mandatoryBox,
-                            new Label("Label"), labelField);
+            timeLabel, hourSlider, minuteSlider,
+            new Label("readOnly"), readOnlyBox,
+            new Label("mandatory"), mandatoryBox,
+            new Label("Label"), labelField);
         box.setPadding(new Insets(10));
         box.setSpacing(10);
-
-        setCenter(businessControl);
         setRight(box);
     }
 
     private void setupValueChangeListeners() {
         ChangeListener<Number> sliderListener = (observable, oldValue, newValue) ->
-                pm.setStartTime(LocalTime.of((int) hourSlider.getValue(), (int) minuteSlider.getValue()));
+            pm.setStartTime(LocalTime.of((int) hourSlider.getValue(), (int) minuteSlider.getValue()));
 
         hourSlider.valueProperty().addListener(sliderListener);
         minuteSlider.valueProperty().addListener(sliderListener);
@@ -87,7 +86,11 @@ public class DemoPane extends BorderPane {
         mandatoryBox.selectedProperty().bindBidirectional(pm.mandatoryProperty());
         labelField.textProperty().bindBidirectional(pm.labelProperty());
 
-        //todo setup bindings to businesscontrol
+        //todo: setup bindings to businesscontrol
+        timeControl.timeProperty().bindBidirectional(pm.startTimeProperty());
+        timeControl.captionProperty().bind(pm.labelProperty());
+        timeControl.mandatoryProperty().bind(pm.mandatoryProperty()); //wann würden wir bidirectional brauchen: nur wenn der Benutzer das mandatory auch definieren kann (z.B. Administrator)
+        timeControl.editableProperty().bind(pm.readOnlyProperty().not()); //wenn readOnly auf true, ist editable auf false
     }
 
 }
