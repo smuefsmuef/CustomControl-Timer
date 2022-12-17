@@ -1,6 +1,7 @@
 package cuie.timecontrol;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -42,6 +43,7 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
     // wird spaeter gebraucht
     private static final int ICON_SIZE = 12;
     private static final int IMG_OFFSET = 4;
+
 
     private static ImageView invalidIcon =
         new ImageView(new Image(MyTimeSkin.class.getResource("icons/invalid.png").toExternalForm(),
@@ -141,10 +143,16 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
         pillShadow.setArcWidth(15.0);
         pillShadow.setArcHeight(15.0);
 
-//        chooserButton = new Button(ANGLE_DOWN); chooserButton.getStyleClass().add("chooserButton");
-//        dropDownChooser = new DropDownChooser(getSkinnable());
-//        popup = new Popup();
-//        popup.getContent().addAll(dropDownChooser);
+       chooserButton = new Button();
+       chooserButton.setText("Wähle Zeit");
+       chooserButton.getStyleClass().add("dropDownChooser");
+        chooserButton.setLayoutX(255);
+        chooserButton.setLayoutY(150);
+
+        dropDownChooser = new DropDownChooser(getSkinnable());
+        popup = new Popup();
+
+        
 
     }
 
@@ -157,9 +165,11 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
     }
 
     private void layoutParts() {
+        popup.getContent().addAll(dropDownChooser);
+
         drawingPane.getChildren()
             .addAll(pillBackground, pillForegroundRect, pillForegroundCircle, pillShadow, captionLabel, timeField,
-                readOnlyTimeLabel);
+                readOnlyTimeLabel, chooserButton);
         getChildren().add(drawingPane);
     }
 
@@ -190,25 +200,27 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
                 }
                 }
             });
+
+        chooserButton.setOnAction(event -> {
+            if (popup.isShowing()) {
+                popup.hide();
+            } else {
+                popup.show(timeField.getScene().getWindow()); }
+        });
+       popup.setOnHidden(event -> {
+           chooserButton.setText("Wähle Zeit");
+       }); // todo
+        popup.setOnShown(event -> {
+            chooserButton.setText("Schliessen");
+            Point2D location = timeField.localToScreen(
+                timeField.getWidth() -  dropDownChooser.getPrefWidth() - 3,
+                timeField.getHeight() - 3);
+            popup.setX(location.getX());
+            popup.setY(location.getY());
+        });
     }
 
-//    private void setupEventHandlers() {
-//        chooserButton.setOnAction(event -> {
-//            if (popup.isShowing()) {
-//                popup.hide();
-//            } else {
-//                popup.show(editableNode.getScene().getWindow()); }
-//        });
-//        popup.setOnHidden();
-//        popup.setOnShown(event -> {
-//            chooserButton.setText(ANGLE_UP);
-//            Point2D location = editableNode.localToScreen(
-//                editableNode.getWidth() -  dropDownChooser.getPrefWidth() - 3,
-//                editableNode.getHeight() - 3);
-//            popup.setX(location.getX());
-//            popup.setY(location.getY());
-//        });
-//        }
+
 
     private void setupBindings() {
 
