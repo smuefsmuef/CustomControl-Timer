@@ -1,8 +1,11 @@
 package cuie.timecontrol;
 
+import java.time.LocalTime;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 
@@ -11,15 +14,15 @@ public class DropDownChooser extends VBox {
 
     private final MyTimeControl timeControl;
 
-    private ListView list;
-
-    ObservableList<String> options =
+    ObservableList<LocalTime> times =
         FXCollections.observableArrayList(
-            "08:00",
-            "12:00",
-            "16:00",
-            "20:00"
+            LocalTime.of(8, 0),
+            LocalTime.of(12, 0),
+            LocalTime.of(16, 0),
+            LocalTime.of(20, 0),
+            LocalTime.of(0, 0)
         );
+    private ListView<LocalTime> list;
 
 
     public DropDownChooser(MyTimeControl timeControl) {
@@ -27,7 +30,9 @@ public class DropDownChooser extends VBox {
         initializeSelf();
         initializeParts();
         layoutParts();
+        setupEventListeners();
         setupBindings();
+
     }
 
     private void initializeSelf() {
@@ -35,19 +40,29 @@ public class DropDownChooser extends VBox {
         getStylesheets().add(stylesheet);
 
         getStyleClass().add("dropdown-chooser");
-
-
     }
 
     private void initializeParts() {
-        list = new ListView<>(options);
+        list = new ListView<LocalTime>(times);
+
     }
 
     private void layoutParts() {
         getChildren().addAll( list);
     }
 
-    private void setupBindings() {
+    private void setupEventListeners() {
+        list.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                timeControl.setTime(list.getSelectionModel().getSelectedItem()); // 20:00
+            }
+        });
+    }
+
+
+
+        private void setupBindings() {
     }
 
 }

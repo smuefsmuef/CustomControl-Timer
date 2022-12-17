@@ -45,17 +45,6 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
     private static final int IMG_OFFSET = 4;
 
 
-    private static ImageView invalidIcon =
-        new ImageView(new Image(MyTimeSkin.class.getResource("icons/invalid.png").toExternalForm(),
-            ICON_SIZE, ICON_SIZE,
-            true, false));
-
-    private static ImageView validIcon =
-        new ImageView(new Image(MyTimeSkin.class.getResource("icons/valid.png").toExternalForm(),
-            ICON_SIZE, ICON_SIZE,
-            true, false));
-
-
     //todo: replace it
     private TextField timeField;
     private Label captionLabel;  //in ass. 2 dürfen wir neben Text andere Standardlabel verwenden
@@ -144,7 +133,7 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
         pillShadow.setArcHeight(15.0);
 
        chooserButton = new Button();
-       chooserButton.setText("Wähle Zeit");
+        chooserButton.setText("Zeit wählen");
        chooserButton.getStyleClass().add("dropDownChooser");
         chooserButton.setLayoutX(255);
         chooserButton.setLayoutY(150);
@@ -208,10 +197,10 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
                 popup.show(timeField.getScene().getWindow()); }
         });
        popup.setOnHidden(event -> {
-           chooserButton.setText("Wähle Zeit");
+           chooserButton.setText("Zeit wählen");
        }); // todo
         popup.setOnShown(event -> {
-            chooserButton.setText("Schliessen");
+            chooserButton.setText("Setzen");
             Point2D location = timeField.localToScreen(
                 timeField.getWidth() -  dropDownChooser.getPrefWidth() - 3,
                 timeField.getHeight() - 3);
@@ -227,10 +216,13 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
         captionLabel.textProperty().bind(getSkinnable().captionProperty());
 
         readOnlyTimeLabel.textProperty().bind(getSkinnable().timeProperty().asString());
-
         readOnlyTimeLabel.visibleProperty().bind(getSkinnable().editableProperty().not());
-        timeField.visibleProperty().bind(getSkinnable().editableProperty());
 
+        chooserButton.visibleProperty().bind(getSkinnable().editableProperty());
+        dropDownChooser.visibleProperty().bind(getSkinnable().editableProperty());
+
+
+        timeField.visibleProperty().bind(getSkinnable().editableProperty());
         timeField.textProperty().bindBidirectional(getSkinnable().timeAsTextProperty());
 
     }
