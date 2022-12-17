@@ -44,7 +44,8 @@ public class MyTimeControl extends Control {
 
     private final StringProperty timeAsText = new SimpleStringProperty();
     private final ObjectProperty<LocalTime> time = new SimpleObjectProperty();
-        //neutrale Bezeichnung, ohne Businesslogik
+
+
     private final StringProperty caption = new SimpleStringProperty();
     private final BooleanProperty mandatory = new SimpleBooleanProperty() {
         //neue anonyme Innerclass; hier kann ich invalidated überschreiben
@@ -69,6 +70,8 @@ public class MyTimeControl extends Control {
             pseudoClassStateChanged(CONVERTIBLE_CLASS, get());
         }
     };
+
+    private final BooleanProperty alarm = new SimpleBooleanProperty();
 
     //Verbindung zum skin
     public MyTimeControl(SkinType skinType) {
@@ -137,8 +140,6 @@ public class MyTimeControl extends Control {
     protected Skin<?> createDefaultSkin() {
         return skinType.getFactory().apply(this);
     }
-
-    private final BooleanProperty alarm = new SimpleBooleanProperty();
 
     private void setupBindings() {
     }
