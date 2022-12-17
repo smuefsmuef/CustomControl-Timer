@@ -20,6 +20,7 @@ public class DemoStarter extends Application {
 
         primaryStage.show();
 
+        // todo remove
 //       ScenicView.show(scene);
  //       CSSFX.start();
     }

@@ -17,6 +17,11 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.text.Font;
 
+// todo add dropdown
+// todo clean up, remove unused code & rename variables?
+// todo check resizing
+// todo figma draft?
+
 public class MyTimeControl extends Control {
 
     private static final String CONVERTIBLE_REGEX = "now|(\\d{1,2}[:]{0,1}\\d{0,2})";
@@ -63,7 +68,6 @@ public class MyTimeControl extends Control {
         }
     };
 
-
     //Verbindung zum skin
     public MyTimeControl(SkinType skinType) {
         this.skinType = skinType;
@@ -104,15 +108,15 @@ public class MyTimeControl extends Control {
     }
 
     public void increase() {
-        setTime(getTime().plusHours(1));
+        setTime(getTime().plusMinutes(15));
     }
 
     public void decrease() {
-        setTime(getTime().minusHours(1));
+        setTime(getTime().minusMinutes(15));
     }
 
     public void reset() {
-        setTime(getTime());
+        setTime(LocalTime.parse("00:00"));
     }
 
     private void initializeSelf() {
