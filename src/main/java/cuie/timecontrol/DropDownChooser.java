@@ -9,7 +9,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-
 public class DropDownChooser extends VBox {
     private static final String STYLE_CSS = "dropDownChooser.css";
 
@@ -24,7 +23,6 @@ public class DropDownChooser extends VBox {
             LocalTime.of(0, 0)
         );
     private ListView<LocalTime> list;
-
 
     public DropDownChooser(MyTimeControl timeControl) {
         this.timeControl = timeControl;
@@ -67,10 +65,8 @@ public class DropDownChooser extends VBox {
             if( event.getCode() == KeyCode.ENTER ) {
                 timeControl.setTime(list.getSelectionModel().getSelectedItem()); // z. B. 20:00
             }
+
         } );
-
-        // todo schliessen des popups when eins dieser events getriggert wird
-
     }
 
         private void setupBindings() {

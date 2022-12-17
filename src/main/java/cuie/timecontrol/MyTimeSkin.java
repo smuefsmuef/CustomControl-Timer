@@ -40,11 +40,6 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
 
     private static final Color BLUE = rgb(54, 84, 112);
 
-    // wird spaeter gebraucht
-    private static final int ICON_SIZE = 12;
-    private static final int IMG_OFFSET = 4;
-
-
     //todo: replace it
     private TextField timeField;
     private Label captionLabel;  //in ass. 2 dürfen wir neben Text andere Standardlabel verwenden
@@ -132,17 +127,14 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
         pillShadow.setArcWidth(15.0);
         pillShadow.setArcHeight(15.0);
 
-       chooserButton = new Button();
+        chooserButton = new Button();
         chooserButton.setText("Zeit wählen");
-       chooserButton.getStyleClass().add("dropDownChooser");
+        chooserButton.getStyleClass().add("dropDownChooser");
         chooserButton.setLayoutX(255);
         chooserButton.setLayoutY(150);
 
         dropDownChooser = new DropDownChooser(getSkinnable());
         popup = new Popup();
-
-        
-
     }
 
     private void initializeDrawingPane() {
@@ -196,11 +188,11 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
             } else {
                 popup.show(timeField.getScene().getWindow()); }
         });
-       popup.setOnHidden(event -> {
+        popup.setOnHidden(event -> {
            chooserButton.setText("Zeit wählen");
-       });
+        });
         popup.setOnShown(event -> {
-            chooserButton.setText("Setzen");
+            chooserButton.setText("setzen");
             Point2D location = timeField.localToScreen(
                 timeField.getWidth() -  dropDownChooser.getPrefWidth() - 3,
                 timeField.getHeight() - 3);
@@ -209,10 +201,7 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
         });
     }
 
-
-
     private void setupBindings() {
-
         captionLabel.textProperty().bind(getSkinnable().captionProperty());
 
         readOnlyTimeLabel.textProperty().bind(getSkinnable().timeProperty().asString());
