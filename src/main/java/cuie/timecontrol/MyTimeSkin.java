@@ -198,7 +198,7 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
         });
        popup.setOnHidden(event -> {
            chooserButton.setText("Zeit wählen");
-       }); // todo
+       });
         popup.setOnShown(event -> {
             chooserButton.setText("Setzen");
             Point2D location = timeField.localToScreen(
@@ -220,7 +220,6 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
 
         chooserButton.visibleProperty().bind(getSkinnable().editableProperty());
         dropDownChooser.visibleProperty().bind(getSkinnable().editableProperty());
-
 
         timeField.visibleProperty().bind(getSkinnable().editableProperty());
         timeField.textProperty().bindBidirectional(getSkinnable().timeAsTextProperty());
