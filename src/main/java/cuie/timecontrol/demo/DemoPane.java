@@ -70,6 +70,7 @@ public class DemoPane extends BorderPane {
 
         pm.startTimeProperty().addListener((observable, oldValue, newValue) -> updateSliders());
 
+        //pm.alarmProperty().addListener((observable, oldValue, newValue) -> timeControl.checkTime());
         updateSliders();
     }
 
@@ -91,6 +92,7 @@ public class DemoPane extends BorderPane {
         timeControl.captionProperty().bind(pm.labelProperty());
         timeControl.mandatoryProperty().bind(pm.mandatoryProperty()); //wann würden wir bidirectional brauchen: nur wenn der Benutzer das mandatory auch definieren kann (z.B. Administrator)
         timeControl.editableProperty().bind(pm.readOnlyProperty().not()); //wenn readOnly auf true, ist editable auf false
+        timeControl.alarmProperty().bind(pm.alarmProperty());
     }
 
 }

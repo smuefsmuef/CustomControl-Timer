@@ -15,6 +15,7 @@ public class PresentationModel {
     private final StringProperty            label     = new SimpleStringProperty("Medikament XY");
     private final BooleanProperty           mandatory = new SimpleBooleanProperty(true);
     private final BooleanProperty           readOnly  = new SimpleBooleanProperty(false);
+    private final BooleanProperty           alarm     = new SimpleBooleanProperty(false);
 
 
     public LocalTime getStartTime() {
@@ -64,4 +65,10 @@ public class PresentationModel {
     public void setReadOnly(boolean readOnly) {
         this.readOnly.set(readOnly);
     }
+
+    public boolean isAlarm() { return alarm.get(); }
+
+    public BooleanProperty alarmProperty() { return alarm; }
+
+    public void setAlarm(boolean alarm) { this.alarm.set(alarm); }
 }

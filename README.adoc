@@ -15,8 +15,10 @@
 * _Unser Time Control ist für Pflegende und Senior:innen konzipiert. Von einer/einem Pflegenden kann die Zeit
 für die Einnahme des nächsten Medikamentes eingestellt werden. Die Zeit kann entweder aus einemm Dropdown
 mit üblichen Zeiten für die Einnahme von Medikamenten (8:00, 12:00, 16:00; 20:00) ausgewählt oder manuell eingestellt
-werden, immer auf volle Stunden gerundet.  Die Zeit wird dann von den Pflegnenden auf "read only" gesetzt und der/dem
-Senior:in an einen gut sichtbaren Ort gestellt. Sobald die eingestellte Zeit erreicht ist, beginnt der Timer zu blinken.
+werden. Mit den Pfeiltasten (oben/unten) wird die Zeit um 15min hoch oder runter gestellt. Mit der escape Taste
+wird die Zeit wieder auf 00:00 gesetzt. Wenn die Zeit richtig eingestellt ist, wird sie von den Pflegenden auf
+"read only" gesetzt und der/dem Senior:in an einen gut sichtbaren Ort gestellt. Sobald die eingestellte Zeit erreicht ist,
+ beginnt der Timer zu blinken.
 
 === Initiale Schritte
 

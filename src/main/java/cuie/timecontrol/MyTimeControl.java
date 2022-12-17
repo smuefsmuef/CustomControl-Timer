@@ -6,9 +6,11 @@ import java.util.regex.Pattern;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -41,9 +43,9 @@ public class MyTimeControl extends Control {
     private static final PseudoClass CONVERTIBLE_CLASS = PseudoClass.getPseudoClass("convertible");
 
     private final StringProperty timeAsText = new SimpleStringProperty();
-    private final ObjectProperty<LocalTime> time = new SimpleObjectProperty();  //neutrale Bezeichnung, ohne Businesslogik
+    private final ObjectProperty<LocalTime> time = new SimpleObjectProperty();
+        //neutrale Bezeichnung, ohne Businesslogik
     private final StringProperty caption = new SimpleStringProperty();
-
     private final BooleanProperty mandatory = new SimpleBooleanProperty() {
         //neue anonyme Innerclass; hier kann ich invalidated überschreiben
         @Override
@@ -60,7 +62,7 @@ public class MyTimeControl extends Control {
         }
     };
 
-    private final BooleanProperty convertible = new SimpleBooleanProperty(){
+    private final BooleanProperty convertible = new SimpleBooleanProperty() {
         @Override
         protected void invalidated() {
             super.invalidated();
@@ -74,19 +76,18 @@ public class MyTimeControl extends Control {
 
         initializeSelf();
 
-        time.addListener( (observable, oldValue, newValue) -> {
+        time.addListener((observable, oldValue, newValue) -> {
             setTimeAsText(newValue.toString());
         });
-        timeAsText.addListener( (observable, oldValue, newValue) -> {
+        timeAsText.addListener((observable, oldValue, newValue) -> {
             setTime(LocalTime.parse(newValue, DateTimeFormatter.ofPattern("H:mm")));
         });
-
 
         //hier überprüfen wir, ob der String valide und konvertierbar ist
         timeAsText.addListener((observable, oldValue, newValue) -> {
             setConvertible(newValue.equals("now"));  //if not now then setConvertible = false
 
-            if(!isConvertible()) {
+            if (!isConvertible()) {
 
                 if (TIME_FORMAT_PATTERN.matcher(newValue).matches()) {
                     setTime(LocalTime.parse(newValue, DateTimeFormatter.ofPattern("H:mm")));
@@ -102,9 +103,8 @@ public class MyTimeControl extends Control {
 
     }
 
-
     public void convert() {
-        if(isConvertible()) {
+        if (isConvertible()) {
             setTime(LocalTime.now());
         }
     }
@@ -121,6 +121,14 @@ public class MyTimeControl extends Control {
         setTime(LocalTime.parse("00:00"));
     }
 
+    public boolean checkTime() {
+        boolean alarm = isAlarm();
+        if (getTime().isBefore(LocalTime.now())) {
+            alarm = true;
+        }
+        return alarm;
+    }
+
     private void initializeSelf() {
         getStyleClass().add("my-time-control");
     }
@@ -130,20 +138,21 @@ public class MyTimeControl extends Control {
         return skinType.getFactory().apply(this);
     }
 
+    private final BooleanProperty alarm = new SimpleBooleanProperty();
 
     private void setupBindings() {
     }
 
 
     //Hilfsmethoden
-    public void loadFonts(String... font){
-        for(String f : font){
+    public void loadFonts(String... font) {
+        for (String f : font) {
             Font.loadFont(getClass().getResourceAsStream(f), 0);
         }
     }
 
-    public void addStylesheetFiles(String... stylesheetFile){
-        for(String file : stylesheetFile){
+    public void addStylesheetFiles(String... stylesheetFile) {
+        for (String file : stylesheetFile) {
             String stylesheet = getClass().getResource(file).toExternalForm();
             getStylesheets().add(stylesheet);
         }
@@ -234,6 +243,18 @@ public class MyTimeControl extends Control {
 
     public void setConvertible(boolean convertible) {
         this.convertible.set(convertible);
+    }
+
+    public boolean isAlarm() {
+        return alarm.get();
+    }
+
+    public BooleanProperty alarmProperty() {
+        return alarm;
+    }
+
+    public void setAlarm(boolean alarm) {
+        this.alarm.set(alarm);
     }
 }
 
