@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
@@ -48,6 +49,9 @@ public class DropDownChooser extends VBox {
     }
 
     private void layoutParts() {
+        list.setPrefWidth(100);
+        list.setPrefHeight(70);
+
         getChildren().addAll( list);
     }
 
@@ -55,12 +59,19 @@ public class DropDownChooser extends VBox {
         list.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                timeControl.setTime(list.getSelectionModel().getSelectedItem()); // 20:00
+                timeControl.setTime(list.getSelectionModel().getSelectedItem()); // z. B. 20:00
             }
         });
+
+        list.setOnKeyPressed( event -> {
+            if( event.getCode() == KeyCode.ENTER ) {
+                timeControl.setTime(list.getSelectionModel().getSelectedItem()); // z. B. 20:00
+            }
+        } );
+
+        // todo schliessen des popups when eins dieser events getriggert wird
+
     }
-
-
 
         private void setupBindings() {
     }
