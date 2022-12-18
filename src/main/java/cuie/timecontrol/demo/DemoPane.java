@@ -20,12 +20,12 @@ public class DemoPane extends BorderPane {
 
     private MyTimeControl timeControl;
 
-    private Label  timeLabel;
+    private Label timeLabel;
     private Slider hourSlider;
     private Slider minuteSlider;
 
-    private CheckBox  readOnlyBox;
-    private CheckBox  mandatoryBox;
+    private CheckBox readOnlyBox;
+    private CheckBox mandatoryBox;
     private TextField labelField;
 
     public DemoPane(PresentationModel pm) {
@@ -41,12 +41,12 @@ public class DemoPane extends BorderPane {
 
         timeControl = new MyTimeControl(SkinType.EXPERIMENTAL);
 
-        timeLabel    = new Label();
-        hourSlider   = new Slider(0, 23, 0);
+        timeLabel = new Label();
+        hourSlider = new Slider(0, 23, 0);
         minuteSlider = new Slider(0, 59, 0);
-        readOnlyBox  = new CheckBox();
+        readOnlyBox = new CheckBox();
         mandatoryBox = new CheckBox();
-        labelField   = new TextField();
+        labelField = new TextField();
     }
 
     private void layoutControls() {
@@ -70,7 +70,6 @@ public class DemoPane extends BorderPane {
 
         pm.startTimeProperty().addListener((observable, oldValue, newValue) -> updateSliders());
 
-        //pm.alarmProperty().addListener((observable, oldValue, newValue) -> timeControl.checkTime());
         updateSliders();
     }
 
@@ -87,12 +86,10 @@ public class DemoPane extends BorderPane {
         mandatoryBox.selectedProperty().bindBidirectional(pm.mandatoryProperty());
         labelField.textProperty().bindBidirectional(pm.labelProperty());
 
-        //todo: setup bindings to businesscontrol
         timeControl.timeProperty().bindBidirectional(pm.startTimeProperty());
         timeControl.captionProperty().bind(pm.labelProperty());
-        timeControl.mandatoryProperty().bind(pm.mandatoryProperty()); //wann würden wir bidirectional brauchen: nur wenn der Benutzer das mandatory auch definieren kann (z.B. Administrator)
-        timeControl.editableProperty().bind(pm.readOnlyProperty().not()); //wenn readOnly auf true, ist editable auf false
-        timeControl.alarmProperty().bind(pm.alarmProperty());
+        timeControl.mandatoryProperty().bind(pm.mandatoryProperty());
+        timeControl.editableProperty().bind(pm.readOnlyProperty().not());
+        timeControl.blinkerProperty().bind(pm.blinkerProperty());
     }
-
 }

@@ -4,13 +4,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -19,9 +15,8 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.text.Font;
 
-// todo add dropdown
+// todo style dropdown
 // todo clean up, remove unused code & rename variables?
-// todo check resizing
 // todo figma draft?
 
 public class MyTimeControl extends Control {
@@ -36,7 +31,7 @@ public class MyTimeControl extends Control {
 
     private final SkinType skinType;
 
-    private static final PseudoClass MANDATORY_CLASS =  //Das ist eine Konstante, deshalb gross geschrieben
+    private static final PseudoClass MANDATORY_CLASS =
         PseudoClass.getPseudoClass("mandatory");
 
     private static final PseudoClass INVALID_CLASS = PseudoClass.getPseudoClass("invalid");
@@ -51,15 +46,16 @@ public class MyTimeControl extends Control {
         //neue anonyme Innerclass; hier kann ich invalidated überschreiben
         @Override
         protected void invalidated() {
-            pseudoClassStateChanged(MANDATORY_CLASS, get());  //auf allen guten Properties ist get() definiert
+            pseudoClassStateChanged(MANDATORY_CLASS, get());
         }
     };
 
     private final BooleanProperty editable = new SimpleBooleanProperty();
+
     private final BooleanProperty invalid = new SimpleBooleanProperty() {
         @Override
         protected void invalidated() {
-            pseudoClassStateChanged(INVALID_CLASS, get());  //auf allen guten Properties ist get() definiert
+            pseudoClassStateChanged(INVALID_CLASS, get());
         }
     };
 
@@ -71,9 +67,8 @@ public class MyTimeControl extends Control {
         }
     };
 
-    private final BooleanProperty alarm = new SimpleBooleanProperty();
+    private final BooleanProperty blinker = new SimpleBooleanProperty();
 
-    //Verbindung zum skin
     public MyTimeControl(SkinType skinType) {
         this.skinType = skinType;
 
@@ -86,10 +81,9 @@ public class MyTimeControl extends Control {
             setTime(LocalTime.parse(newValue, DateTimeFormatter.ofPattern("H:mm")));
         });
 
-        //hier überprüfen wir, ob der String valide und konvertierbar ist
-        timeAsText.addListener((observable, oldValue, newValue) -> {
-            setConvertible(newValue.equals("now"));  //if not now then setConvertible = false
 
+        timeAsText.addListener((observable, oldValue, newValue) -> {
+            setConvertible(newValue.equals("now"));
             if (!isConvertible()) {
 
                 if (TIME_FORMAT_PATTERN.matcher(newValue).matches()) {
@@ -102,8 +96,6 @@ public class MyTimeControl extends Control {
                 setInvalid(false);
             }
         });
-
-
     }
 
     public void convert() {
@@ -125,22 +117,25 @@ public class MyTimeControl extends Control {
     }
 
     public void roundUp() {
-        int min =  getTime().getMinute();
-        setTime(getTime().plusMinutes(30-min));
+        setTime(getTime().plusMinutes(30 - getTime().getMinute()));
     }
 
     public void roundDown() {
-        int min =  getTime().getMinute();
-        setTime(getTime().minusMinutes(min));
+        setTime(getTime().minusMinutes(getTime().getMinute()));
     }
 
+    public void enter() {
+        setTime(getTime().plusMinutes(60 - getTime().getMinute()));
+    }
 
     public boolean checkTime() {
-        boolean alarm = isAlarm();
-        if (getTime().isBefore(LocalTime.now())) {
-            alarm = true;
+        boolean blinker = getBlinker();
+        if (LocalTime.now().getHour() < 17) {
+            if (getTime().isBefore(LocalTime.now())) {
+                blinker = true;
+            }
         }
-        return alarm;
+        return blinker;
     }
 
     private void initializeSelf() {
@@ -156,7 +151,6 @@ public class MyTimeControl extends Control {
     }
 
 
-    //Hilfsmethoden
     public void loadFonts(String... font) {
         for (String f : font) {
             Font.loadFont(getClass().getResourceAsStream(f), 0);
@@ -171,7 +165,7 @@ public class MyTimeControl extends Control {
     }
 
 
-    //getter und setter
+    //Getter und setter
 
     public LocalTime getTime() {
         return time.get();
@@ -257,16 +251,16 @@ public class MyTimeControl extends Control {
         this.convertible.set(convertible);
     }
 
-    public boolean isAlarm() {
-        return alarm.get();
+    public boolean getBlinker() {
+        return blinker.get();
     }
 
-    public BooleanProperty alarmProperty() {
-        return alarm;
+    public BooleanProperty blinkerProperty() {
+        return blinker;
     }
 
-    public void setAlarm(boolean alarm) {
-        this.alarm.set(alarm);
+    public void setBlinker(boolean blinker) {
+        this.blinker.set(blinker);
     }
 }
 

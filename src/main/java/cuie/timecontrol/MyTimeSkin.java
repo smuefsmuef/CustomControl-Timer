@@ -9,8 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SkinBase;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
@@ -24,7 +23,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Popup;
 import javafx.util.Duration;
 
-import static javafx.scene.paint.Color.LIGHTYELLOW;
 import static javafx.scene.paint.Color.RED;
 import static javafx.scene.paint.Color.TRANSPARENT;
 import static javafx.scene.paint.Color.WHITE;
@@ -36,7 +34,6 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
 
     private static final Color BLUE = rgb(54, 84, 112);
 
-    //todo: replace it
     private TextField timeField;
     private Label captionLabel;
     private Label readOnlyTimeLabel;
@@ -47,7 +44,7 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
     private Circle pillForegroundCircle;
     private Rectangle pillShadow;
 
-    private Timeline alarm;
+    private Timeline blinker;
 
     private Pane drawingPane;
 
@@ -146,21 +143,26 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
     }
 
     private void initializeAnimations() {
-        alarm = new Timeline(
+        blinker = new Timeline(
             new KeyFrame(Duration.seconds(0.5), e -> pillBlinker.setFill(RED)),
             new KeyFrame(Duration.seconds(1.0), e -> pillBlinker.setFill(BLUE))
         );
     }
 
     private void setupValueChangeListeners() {
-        getSkinnable().timeProperty().addListener((observable, oldValue, newValue) -> {
-            if (getSkinnable().checkTime()) {
-                pillBackground.setFill(TRANSPARENT);
-                alarm.setCycleCount(100);
-                alarm.play();
+
+        getSkinnable().editableProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                if (getSkinnable().checkTime()) {
+                    pillBackground.setFill(TRANSPARENT);
+                    blinker.setCycleCount(100);
+                    blinker.play();
+                } else {
+                    blinker.stop();
+                    pillBackground.setFill(BLUE);
+                }
             } else {
-                alarm.stop();
-                pillBackground.setFill(BLUE);
+                blinker.stop();
             }
         });
     }
@@ -196,7 +198,10 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
                     getSkinnable().roundUp();
                     event.consume();
                 }
-
+                case ENTER -> {
+                    getSkinnable().enter();
+                    event.consume();
+                }
                 }
             });
 
@@ -204,15 +209,16 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
             if (popup.isShowing()) {
                 popup.hide();
             } else {
-                popup.show(timeField.getScene().getWindow()); }
+                popup.show(timeField.getScene().getWindow());
+            }
         });
         popup.setOnHidden(event -> {
-           chooserButton.setText("Zeit wählen");
+            chooserButton.setText("Zeit wählen");
         });
         popup.setOnShown(event -> {
             chooserButton.setText("setzen");
             Point2D location = timeField.localToScreen(
-                timeField.getWidth() -  dropDownChooser.getPrefWidth() - 3,
+                timeField.getWidth() - dropDownChooser.getPrefWidth() - 3,
                 timeField.getHeight() - 3);
             popup.setX(location.getX());
             popup.setY(location.getY());
