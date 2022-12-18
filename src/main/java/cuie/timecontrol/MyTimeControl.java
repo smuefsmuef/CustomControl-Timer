@@ -124,6 +124,17 @@ public class MyTimeControl extends Control {
         setTime(LocalTime.parse("00:00"));
     }
 
+    public void roundUp() {
+        int min =  getTime().getMinute();
+        setTime(getTime().plusMinutes(30-min));
+    }
+
+    public void roundDown() {
+        int min =  getTime().getMinute();
+        setTime(getTime().minusMinutes(min));
+    }
+
+
     public boolean checkTime() {
         boolean alarm = isAlarm();
         if (getTime().isBefore(LocalTime.now())) {

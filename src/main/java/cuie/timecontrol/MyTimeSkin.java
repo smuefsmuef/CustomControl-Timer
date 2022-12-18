@@ -51,6 +51,10 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
 
     private Pane drawingPane;
 
+    private Popup popup;
+    private Pane dropDownChooser;
+    private Button chooserButton;
+
     MyTimeSkin(MyTimeControl control) {
         super(control);
         initializeSelf();
@@ -183,6 +187,16 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
                     getSkinnable().decrease();
                     event.consume();
                 }
+
+                case LEFT -> {
+                    getSkinnable().roundDown();
+                    event.consume();
+                }
+                case RIGHT -> {
+                    getSkinnable().roundUp();
+                    event.consume();
+                }
+
                 }
             });
 
