@@ -98,6 +98,8 @@ public class MyTimeControl extends Control {
                 setInvalid(false);
             }
         });
+
+
     }
 
 
