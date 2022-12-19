@@ -56,13 +56,13 @@ public class DropDownChooser extends VBox {
         list.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                timeControl.setTime(list.getSelectionModel().getSelectedItem()); // z. B. 20:00
+                timeControl.setTime(list.getSelectionModel().getSelectedItem());
             }
         });
 
         list.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                timeControl.setTime(list.getSelectionModel().getSelectedItem()); // z. B. 20:00
+                timeControl.setTime(list.getSelectionModel().getSelectedItem());
             }
 
         });

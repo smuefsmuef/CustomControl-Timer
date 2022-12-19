@@ -12,7 +12,7 @@ import javafx.beans.property.StringProperty;
 
 public class PresentationModel {
     private final ObjectProperty<LocalTime> startTime = new SimpleObjectProperty<>(LocalTime.now());
-    private final StringProperty label = new SimpleStringProperty("Medikament XY");
+    private final StringProperty label = new SimpleStringProperty("Aspirin 2mg");
     private final BooleanProperty mandatory = new SimpleBooleanProperty(true);
     private final BooleanProperty readOnly = new SimpleBooleanProperty(false);
     private final BooleanProperty blinker = new SimpleBooleanProperty(false);

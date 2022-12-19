@@ -15,10 +15,6 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 import javafx.scene.text.Font;
 
-// todo style dropdown
-// todo clean up, remove unused code & rename variables?
-// todo figma draft?
-
 public class MyTimeControl extends Control {
 
     private static final String CONVERTIBLE_REGEX = "now|(\\d{1,2}[:]{0,1}\\d{0,2})";
@@ -145,16 +141,6 @@ public class MyTimeControl extends Control {
     @Override
     protected Skin<?> createDefaultSkin() {
         return skinType.getFactory().apply(this);
-    }
-
-    private void setupBindings() {
-    }
-
-
-    public void loadFonts(String... font) {
-        for (String f : font) {
-            Font.loadFont(getClass().getResourceAsStream(f), 0);
-        }
     }
 
     public void addStylesheetFiles(String... stylesheetFile) {
