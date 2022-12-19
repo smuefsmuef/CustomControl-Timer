@@ -2,30 +2,26 @@ package cuie.timecontrol.demo;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
-
-import org.scenicview.ScenicView;
-
-import fr.brouillard.oss.cssfx.CSSFX;
 
 public class DemoStarter extends Application {
 
     @Override
-    public void start(Stage primaryStage)  {
-        PresentationModel pm = new PresentationModel();
+    public void start(Stage primaryStage) throws Exception {
+        PresentationModel pm        = new PresentationModel();
+        Region            rootPanel = new DemoPane(pm);
 
-        Pane rootPane = new DemoPane(pm);
+        Scene scene = new Scene(rootPanel);
 
-        Scene scene = new Scene(rootPane);
-
-        primaryStage.setTitle("Time Control Demo");
+        primaryStage.setTitle("Business Control Demo");
         primaryStage.setScene(scene);
 
         primaryStage.show();
 
- //       ScenicView.show(scene);
+        // todo remove
+//       ScenicView.show(scene);
  //       CSSFX.start();
     }
 

@@ -12,9 +12,10 @@ import javafx.beans.property.StringProperty;
 
 public class PresentationModel {
     private final ObjectProperty<LocalTime> startTime = new SimpleObjectProperty<>(LocalTime.now());
-    private final StringProperty            label     = new SimpleStringProperty("Time (HH:mm)");
-    private final BooleanProperty           mandatory = new SimpleBooleanProperty(true);
-    private final BooleanProperty           readOnly  = new SimpleBooleanProperty(false);
+    private final StringProperty label = new SimpleStringProperty("Medikament XY");
+    private final BooleanProperty mandatory = new SimpleBooleanProperty(true);
+    private final BooleanProperty readOnly = new SimpleBooleanProperty(false);
+    private final BooleanProperty blinker = new SimpleBooleanProperty(false);
 
 
     public LocalTime getStartTime() {
@@ -63,5 +64,17 @@ public class PresentationModel {
 
     public void setReadOnly(boolean readOnly) {
         this.readOnly.set(readOnly);
+    }
+
+    public boolean getBlinker() {
+        return blinker.get();
+    }
+
+    public BooleanProperty blinkerProperty() {
+        return blinker;
+    }
+
+    public void setBlinker(boolean blinker) {
+        this.blinker.set(blinker);
     }
 }

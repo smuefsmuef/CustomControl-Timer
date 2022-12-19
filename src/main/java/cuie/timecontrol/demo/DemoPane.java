@@ -11,21 +11,21 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
+import cuie.timecontrol.MyTimeControl;
 import cuie.timecontrol.SkinType;
-import cuie.timecontrol.TimeControl;
 
 
 public class DemoPane extends BorderPane {
     private final PresentationModel pm;
 
-    private TimeControl businessControl;
+    private MyTimeControl timeControl;
 
-    private Label  timeLabel;
+    private Label timeLabel;
     private Slider hourSlider;
     private Slider minuteSlider;
 
-    private CheckBox  readOnlyBox;
-    private CheckBox  mandatoryBox;
+    private CheckBox readOnlyBox;
+    private CheckBox mandatoryBox;
     private TextField labelField;
 
     public DemoPane(PresentationModel pm) {
@@ -39,32 +39,31 @@ public class DemoPane extends BorderPane {
     private void initializeControls() {
         setPadding(new Insets(10));
 
-        businessControl = new TimeControl(SkinType.DEFAULT_TYPE);
+        timeControl = new MyTimeControl(SkinType.EXPERIMENTAL);
 
-        timeLabel    = new Label();
-        hourSlider   = new Slider(0, 23, 0);
+        timeLabel = new Label();
+        hourSlider = new Slider(0, 23, 0);
         minuteSlider = new Slider(0, 59, 0);
-        readOnlyBox  = new CheckBox();
+        readOnlyBox = new CheckBox();
         mandatoryBox = new CheckBox();
-        labelField   = new TextField();
+        labelField = new TextField();
     }
 
     private void layoutControls() {
+        setCenter(timeControl);
         VBox box = new VBox(10, new Label("Time Control Properties"),
-                            timeLabel, hourSlider, minuteSlider,
-                            new Label("readOnly"), readOnlyBox,
-                            new Label("mandatory"), mandatoryBox,
-                            new Label("Label"), labelField);
+            timeLabel, hourSlider, minuteSlider,
+            new Label("readOnly"), readOnlyBox,
+            new Label("mandatory"), mandatoryBox,
+            new Label("Label"), labelField);
         box.setPadding(new Insets(10));
         box.setSpacing(10);
-
-        setCenter(businessControl);
         setRight(box);
     }
 
     private void setupValueChangeListeners() {
         ChangeListener<Number> sliderListener = (observable, oldValue, newValue) ->
-                pm.setStartTime(LocalTime.of((int) hourSlider.getValue(), (int) minuteSlider.getValue()));
+            pm.setStartTime(LocalTime.of((int) hourSlider.getValue(), (int) minuteSlider.getValue()));
 
         hourSlider.valueProperty().addListener(sliderListener);
         minuteSlider.valueProperty().addListener(sliderListener);
@@ -87,7 +86,10 @@ public class DemoPane extends BorderPane {
         mandatoryBox.selectedProperty().bindBidirectional(pm.mandatoryProperty());
         labelField.textProperty().bindBidirectional(pm.labelProperty());
 
-        //todo setup bindings to businesscontrol
+        timeControl.timeProperty().bindBidirectional(pm.startTimeProperty());
+        timeControl.captionProperty().bind(pm.labelProperty());
+        timeControl.mandatoryProperty().bind(pm.mandatoryProperty());
+        timeControl.editableProperty().bind(pm.readOnlyProperty().not());
+        timeControl.blinkerProperty().bind(pm.blinkerProperty());
     }
-
 }

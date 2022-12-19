@@ -16,11 +16,11 @@ class TimeControlTest {
         Platform.setImplicitExit(false);
     }
 
-    private TimeControl tc;
+    private MyTimeControl tc;
 
     @BeforeEach
     void setup() {
-        tc = new TimeControl(SkinType.DEFAULT_TYPE);
+        tc = new MyTimeControl(SkinType.EXPERIMENTAL);
     }
 
     @Test

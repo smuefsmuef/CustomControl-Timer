@@ -2,8 +2,8 @@
 
 === Bearbeitet von
 
-* _Vorname Nachname_
-* _Vorname Nachname_
+* Petra Kohler
+* Karin Güdel
 
 === Abgabe
 
@@ -12,7 +12,22 @@
 
 === Anwendungskontext
 
-* _kurze Beschreibung des Einsatzgebiets des TimeControl_
+* _Unser Time Control ist für Pflegende und Senior:innen in Altersheimen konzipiert. Von einer/einem Pflegenden kann die Zeit
+für die Einnahme des nächsten Medikamentes und dessen Bezeichnung manuell eingestellt werden. Die Zeit kann entweder aus einem Dropdown
+mit üblichen Zeiten für die Einnahme von Medikamenten (8:00, 12:00, 16:00; 20:00; 23.59) ausgewählt oder manuell eingestellt
+werden.
+
+Mit den Pfeiltasten (oben/unten) wird die Zeit um 15min hoch oder runter gestellt, weil Medikamente selten genauer als
+Viertstunden genau eingenommen werden müssen; mit den Pfeiltasten (links/rechts) wird auf eine halbe Stunde ab- oder
+aufgerundet. Mit der escape Taste wird die Zeit wieder auf 00:00 gesetzt. Mit der enter Taste wird die Zeit auf die
+letzte Stunde abgerundet.
+Wenn vor 17 Uhr eine Zeit auf read-only gesetzt wird, die vor der aktuellen Zeit liegt, dann blinkt der Timer,
+weil die Zeit nicht korrekt sein kann: sie muss nach der aktuellen Zeit liegen. Wenn nach 17 Uhr eine Zeit eingestellt wird,
+dann fällt diese Hilfestellung beim Einstellen weg, weil das nächste Medikament höchstwahrscheinlich am nächsten Tag
+zu einer früheren Zeit eingenommen werden muss.
+
+Wenn die Zeit richtig eingestellt ist, dann wird sie von den Pflegenden auf "read only" gesetzt und für den/die
+Senior:in an einen gut sichtbaren Ort gestellt.
 
 === Initiale Schritte
 
