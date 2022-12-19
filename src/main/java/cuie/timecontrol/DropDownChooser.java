@@ -1,6 +1,7 @@
 package cuie.timecontrol;
 
 import java.time.LocalTime;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -20,7 +21,7 @@ public class DropDownChooser extends VBox {
             LocalTime.of(12, 0),
             LocalTime.of(16, 0),
             LocalTime.of(20, 0),
-            LocalTime.of(0, 0)
+            LocalTime.of(23, 59)
         );
     private ListView<LocalTime> list;
 
@@ -31,7 +32,6 @@ public class DropDownChooser extends VBox {
         layoutParts();
         setupEventListeners();
         setupBindings();
-
     }
 
     private void initializeSelf() {
@@ -43,14 +43,13 @@ public class DropDownChooser extends VBox {
 
     private void initializeParts() {
         list = new ListView<LocalTime>(times);
-
     }
 
     private void layoutParts() {
         list.setPrefWidth(100);
         list.setPrefHeight(70);
 
-        getChildren().addAll( list);
+        getChildren().addAll(list);
     }
 
     private void setupEventListeners() {
@@ -61,15 +60,15 @@ public class DropDownChooser extends VBox {
             }
         });
 
-        list.setOnKeyPressed( event -> {
-            if( event.getCode() == KeyCode.ENTER ) {
+        list.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
                 timeControl.setTime(list.getSelectionModel().getSelectedItem()); // z. B. 20:00
             }
 
-        } );
+        });
     }
 
-        private void setupBindings() {
+    private void setupBindings() {
     }
 
 }
