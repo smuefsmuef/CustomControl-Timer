@@ -1,8 +1,7 @@
 .dropdown-chooser {
-    -fx-background-color: rgb(115, 235, 145);
+    -fx-background-color: rgb(54, 84, 112);
     -fx-background-radius: 4;
     -fx-effect:            dropshadow(gaussian, rgb(200, 200, 200), 5.0, 0.0, 2, 2);
-
     -fx-pref-width:    150;
     -fx-border-width:  1;
     -fx-border-radius: 4;

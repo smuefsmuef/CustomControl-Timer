@@ -42,10 +42,10 @@
     -fx-font-family: 'Inter Black';
 }
 
-my-time-control .pill-background {
-    -fx-color: blue;
-}
+.chooser-button {
+    -fx-text-fill: white;
+    -fx-background-color: rgb(54, 84, 112);
+    -fx-border-color: none;
+    -fx-border-width: 5px;
 
-.time-control:convertible .editable-node {
-    -fx-background-color: darkorchid;
 }

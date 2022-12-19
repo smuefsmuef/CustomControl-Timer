@@ -120,7 +120,7 @@ class MyTimeSkin extends SkinBase<MyTimeControl> {
 
         chooserButton = new Button();
         chooserButton.setText("Zeit wählen");
-        chooserButton.getStyleClass().add("dropDownChooser");
+        chooserButton.getStyleClass().add("chooser-button");
         chooserButton.setLayoutX(255);
         chooserButton.setLayoutY(150);
 
